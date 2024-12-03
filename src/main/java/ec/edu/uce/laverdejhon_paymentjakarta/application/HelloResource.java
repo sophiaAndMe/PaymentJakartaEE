@@ -16,8 +16,6 @@ import jakarta.ws.rs.Produces;
 @Path("/test")
 public class HelloResource {
 
-    @Inject
-    CardPayment cardPayment;
 
 
     @Path("/create")
@@ -28,15 +26,17 @@ public class HelloResource {
         EntityManagerFactory emp = Persistence.createEntityManagerFactory("EntityP");
         EntityManager em = emp.createEntityManager();
         CustomerService cs = new CustomerService(em);
-        //cs.create();
-        return "Hello, World!xd";
+        cs.create(new Customer(1,"Jhon","@example.com",
+                "PaypalPayment","SuperMaxi","500"));
+
+        return cs.toString();
     }
 
     @Path("/pay")
     @GET
     @Produces("text/plain")
     public String payment() {
-        return cardPayment.pay(1,"Jhon","@exaple.com","123");
+        return null;
     }
 
 
