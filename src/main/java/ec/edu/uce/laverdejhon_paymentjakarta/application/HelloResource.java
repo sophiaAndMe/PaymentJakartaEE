@@ -1,37 +1,31 @@
 package ec.edu.uce.laverdejhon_paymentjakarta.application;
 
 
-import ec.edu.uce.laverdejhon_paymentjakarta.entity.Customer;
-import ec.edu.uce.laverdejhon_paymentjakarta.entity.CustomerService;
-import ec.edu.uce.laverdejhon_paymentjakarta.entity.OrderPayment;
-import ec.edu.uce.laverdejhon_paymentjakarta.entity.OrderPaymentService;
+import ec.edu.uce.laverdejhon_paymentjakarta.entity.*;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 
 @Path("/test")
 public class HelloResource {
 
 
-    @Inject
-    CustomerService customerService;
-
     //--> Delete customer
-    //--> ARREGLAR EL DELETE :)
     @GET
-    @Path("/delete={id}")
+    @Path("/{id}")
     @Produces("text/plain")
     @Transactional
     public String deleteCustomer(@PathParam("id")long id){
-        customerService.delete(id);
-        return "Se ha elimiando el customer"+ id;
+
+        EntityManagerFactory emp = Persistence.createEntityManagerFactory("EntityP");
+        EntityManager em = emp.createEntityManager();
+        CustomerService cs = new CustomerService(em);
+        cs.delete(id);
+        return "Se ha elimiando el customer" + id;
     }
 
     //--> Dinamismo con el APIRest
@@ -48,13 +42,9 @@ public class HelloResource {
         EntityManager em = emp.createEntityManager();
         CustomerService cs = new CustomerService(em);
 
-        if (name == null){
-            return "INGRESA UN NOMBRE ))";
-
-        }else {
             cs.create(new Customer(name,address, "paypalpayment",
                     "super", "1000"));
-        }
+
         return cs.toString();
     }
 
@@ -65,11 +55,11 @@ public class HelloResource {
     public String createOrder(){
         EntityManagerFactory emp = Persistence.createEntityManagerFactory("EntityP");
         EntityManager em = emp.createEntityManager();
-        OrderPaymentService orp = new OrderPaymentService(em);
+        ProductService product = new ProductService(em);
 
-        orp.create(new OrderPayment(1));
+        product.create(new Product("camaron","500"));
 
-        return orp.toString();
+        return product.toString();
     }
 
 
