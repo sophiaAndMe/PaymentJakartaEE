@@ -1,12 +1,13 @@
 package ec.edu.uce.laverdejhon_paymentjakarta.application;
 
 
+import ec.edu.uce.laverdejhon_paymentjakarta.Services.CustomerService;
+import ec.edu.uce.laverdejhon_paymentjakarta.Services.ProductService;
 import ec.edu.uce.laverdejhon_paymentjakarta.entity.*;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 
@@ -48,18 +49,17 @@ public class HelloResource {
         return cs.toString();
     }
 
+//    @Inject
+//    ProductService productService;
 
     @Path("/order")
     @GET
-    @Transactional
     public String createOrder(){
-        EntityManagerFactory emp = Persistence.createEntityManagerFactory("EntityP");
-        EntityManager em = emp.createEntityManager();
-        ProductService product = new ProductService(em);
 
-        product.create(new Product("camaron","500"));
 
-        return product.toString();
+        ProductService ps = new ProductService();
+        ps.create(new Product("camaron","500"));
+        return ps.toString();
     }
 
 
