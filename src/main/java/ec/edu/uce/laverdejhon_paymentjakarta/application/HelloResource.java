@@ -49,8 +49,6 @@ public class HelloResource {
         return cs.toString();
     }
 
-//    @Inject
-//    ProductService productService;
 
     @Path("/order")
     @GET
