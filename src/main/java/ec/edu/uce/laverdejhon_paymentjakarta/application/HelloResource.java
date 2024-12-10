@@ -21,16 +21,10 @@ public class HelloResource {
     @Produces("text/plain")
     @Transactional
     public String deleteCustomer(@PathParam("id")long id){
-
-        EntityManagerFactory emp = Persistence.createEntityManagerFactory("EntityP");
-        EntityManager em = emp.createEntityManager();
-        CustomerService cs = new CustomerService(em);
+        CustomerService cs = new CustomerService();
         cs.delete(id);
         return "Se ha elimiando el customer" + id;
     }
-
-    //--> Dinamismo con el APIRest
-
 
     @Path("/name={name}/address={address}")
     @GET
@@ -38,17 +32,11 @@ public class HelloResource {
     @Transactional
     public String createCustomerV2(@PathParam("name")String name,
                                         @PathParam("address") String address){
-
-        EntityManagerFactory emp = Persistence.createEntityManagerFactory("EntityP");
-        EntityManager em = emp.createEntityManager();
-        CustomerService cs = new CustomerService(em);
-
+        CustomerService cs = new CustomerService();
             cs.create(new Customer(name,address, "paypalpayment",
                     "super", "1000"));
-
         return cs.toString();
     }
-
 
     @Path("/order")
     @GET
@@ -59,8 +47,4 @@ public class HelloResource {
         ps.create(new Product("camaron","500"));
         return ps.toString();
     }
-
-
-
-
 }

@@ -5,17 +5,15 @@ import ec.edu.uce.laverdejhon_paymentjakarta.entity.Product;
 import jakarta.ejb.Stateful;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.SynchronizationType;
+import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 
 @Stateful
 public class ProductService {
 
 
-    @PersistenceContext(unitName = "EntityP", synchronization = SynchronizationType.SYNCHRONIZED)
-    EntityManager em;
+    EntityManagerFactory emp = Persistence.createEntityManagerFactory("EntityP");
+    EntityManager em = emp.createEntityManager();
 
     @Inject
     Product product;

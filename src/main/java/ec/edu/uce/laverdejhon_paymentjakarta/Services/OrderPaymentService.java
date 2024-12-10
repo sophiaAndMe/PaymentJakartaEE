@@ -3,13 +3,15 @@ package ec.edu.uce.laverdejhon_paymentjakarta.Services;
 import ec.edu.uce.laverdejhon_paymentjakarta.entity.OrderPayment;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 
 public class OrderPaymentService {
 
-    @PersistenceContext
-    EntityManager em;
+    EntityManagerFactory emp = Persistence.createEntityManagerFactory("EntityP");
+    EntityManager em = emp.createEntityManager();
 
     @Inject
     OrderPayment orderPayment;
