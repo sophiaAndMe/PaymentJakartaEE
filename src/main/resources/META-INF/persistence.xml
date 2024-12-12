@@ -7,7 +7,7 @@
     <persistence-unit name="EntityP" transaction-type="JTA">
 
         <class>ec.edu.uce.laverdejhon_paymentjakarta.entity.Customer</class>
-        <class>ec.edu.uce.laverdejhon_paymentjakarta.entity.OrderPayment</class>
+        <class>ec.edu.uce.laverdejhon_paymentjakarta.entity.OrderP</class>
         <class>ec.edu.uce.laverdejhon_paymentjakarta.entity.Product</class>
         <class>ec.edu.uce.laverdejhon_paymentjakarta.entity.OrderProduct</class>
 
@@ -25,7 +25,7 @@
             <property name="hibernate.use_sql_comments" value="true"/>
 
             <property name="hibernate.default_schema" value="paymentdb" />
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+            <!--<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" /-->
 
 
             <property name="hibernate.connection.pool_size" value="1"/>

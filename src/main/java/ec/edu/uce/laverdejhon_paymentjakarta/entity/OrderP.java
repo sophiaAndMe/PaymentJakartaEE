@@ -13,7 +13,7 @@ import java.util.List;
 @ToString
 @Setter
 @Getter
-public class OrderPayment {
+public class OrderP {
 
     @Id
     @Column(name = "id_order")
@@ -22,16 +22,19 @@ public class OrderPayment {
 
     private Date dia;
 
-    private long id_customer;
-
-    public OrderPayment() {}
+    public OrderP() {}
 
     @ManyToOne
-    @JoinColumn(name = "id_cus")
-    private Customer customer;
+    @JoinColumn(nullable = false)
+    private Customer customer_order;
+
+    @OneToMany(mappedBy = "order_product")
+    private List<OrderProduct> order_product;
 
     @ManyToMany
     private List<Product> products;
+
+
 
 
 }

@@ -2,18 +2,25 @@ package ec.edu.uce.laverdejhon_paymentjakarta.application;
 
 
 import ec.edu.uce.laverdejhon_paymentjakarta.Services.CustomerService;
+import ec.edu.uce.laverdejhon_paymentjakarta.Services.OrderProductService;
 import ec.edu.uce.laverdejhon_paymentjakarta.Services.ProductService;
 import ec.edu.uce.laverdejhon_paymentjakarta.entity.*;
-import jakarta.inject.Inject;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
+
+import java.sql.Date;
 
 @Path("/test")
 public class HelloResource {
 
+    @Path("/all")
+    @GET
+    @Produces("text/plain")
+    public String allCustomer(){
+        CustomerService cs = new CustomerService();
+        cs.getAllCustomer();
+        return cs.getAllCustomer().toString();
+    }
 
     //--> Delete customer
     @GET
@@ -30,21 +37,39 @@ public class HelloResource {
     @GET
     @Produces("text/plain")
     @Transactional
-    public String createCustomerV2(@PathParam("name")String name,
+    public String createCustomerByOrder(@PathParam("name")String name,
                                         @PathParam("address") String address){
         CustomerService cs = new CustomerService();
-            cs.create(new Customer(name,address, "paypalpayment",
-                    "super", "1000"));
-        return cs.toString();
+        cs.create(new Customer(name,address, "paypalpayment",
+                "super", "1000"));
+        return cs.getToStringByCustomer();
     }
 
-    @Path("/order")
+    @Path("/order/{name}&{address}&{payment}&{product}&{amount}")
     @GET
-    public String createOrder(){
+    @Produces("text/plain")
+    @Transactional
+    public String createOrder_Product(@PathParam("name") String name,
+                                      @PathParam("address") String address,
+                                      @PathParam("payment") String payment,
+                                      @PathParam("product") String product,
+                                      @PathParam("amount") String amount){
 
+        CustomerService cs = new CustomerService();
+        cs.create(new Customer(name, address,payment,"TUTI",amount));
 
         ProductService ps = new ProductService();
-        ps.create(new Product("camaron","500"));
-        return ps.toString();
+        ps.create(new Product(product, amount));
+
+        OrderProductService ops = new OrderProductService();
+
+        OrderProduct op = new OrderProduct();
+        op.setAmount(amount);
+        ops.create(op);
+
+        return  cs.getToStringByCustomer()+ ps.getToStringByOrder();
     }
+
+
+
 }

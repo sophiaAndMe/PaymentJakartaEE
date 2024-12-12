@@ -7,12 +7,12 @@ public class CardPayment implements IPayment{
 
 
     @Override
-    public String pay( String fromName, String to, String NumberPay) {
+    public String pay(String typePayment, String to, String NumberPay) {
         return String.format("""
-                name: %s
+                TypePayment: %s
                 to: %s
-                BP: %s:
-                """,fromName,to,NumberPay);
+                BP: %s
+                """,typePayment,to,NumberPay);
 
     }
 }

@@ -44,4 +44,9 @@ public class ProductService {
         return "{INFORMACION DE PAGO: "
                 + product.getId()+'}';
     }
+
+    public String getToStringByOrder(){
+        return product.toString();
+    }
+
 }

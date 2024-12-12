@@ -1,15 +1,16 @@
 package ec.edu.uce.laverdejhon_paymentjakarta.Services;
 
 import ec.edu.uce.laverdejhon_paymentjakarta.entity.Customer;
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
 
-@ApplicationScoped
+import java.util.List;
+
+
+@Stateless
 public class CustomerService {
 
     EntityManagerFactory emp = Persistence.createEntityManagerFactory("EntityP");
@@ -20,30 +21,27 @@ public class CustomerService {
 
     public CustomerService() {}
 
+    // CRUD
 
-    //--> Connection to db trought nameUnity from persistence.xml
-    public CustomerService(EntityManager em) {
-        this.em = em;
-
-    }
-
-    //--> CRUD, Create
-    @Transactional
     public void create(Customer customer) {
         this.customer = customer;
         em.persist(customer);
     }
 
-    //--> Delete
-
     public void delete(long id){
         em.remove(em.find(Customer.class, id));
     }
 
-    @Override
-    public String toString() {
-        return "{INFORMACION DE PAGO: "
-                + customer.getPayment()+
-                "\nEmail: " +  customer.getAddress() +'}';
+
+
+    public List<Customer> getAllCustomer(){
+        String query = "SELECT c FROM Customer c";
+        return em.createQuery(query, Customer.class).getResultList();
     }
+
+    public String getToStringByCustomer(){
+        return this.customer.toString();
+    }
+
+
 }

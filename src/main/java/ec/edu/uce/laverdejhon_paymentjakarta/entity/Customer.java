@@ -9,7 +9,6 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@ToString
 @ApplicationScoped
 @Table(name = "`CUSTOMER`", schema = "paymentdb")
 public class Customer {
@@ -29,14 +28,27 @@ public class Customer {
                     String payment, String to, String amount) {
         this.name = name;
         this.address = address;
-        this.payment = FactoryPay.FactoryP(payment,name,to,amount);
+        this.payment = FactoryPay.FactoryP(payment,to,amount);
     }
 
     public Customer() {
 
     }
 
-    @OneToMany(mappedBy = "customer")
-    private List<OrderPayment> orderPayments;
+    @OneToMany(mappedBy = "customer_order")
+    private  List<OrderP> orderPCustomer;
 
+    @OneToOne(mappedBy = "one_customer")
+    private OrderProduct orderProduct;
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", payment='" + payment + '\'' +
+                ", orderPayments=" + +
+                '}';
+    }
 }

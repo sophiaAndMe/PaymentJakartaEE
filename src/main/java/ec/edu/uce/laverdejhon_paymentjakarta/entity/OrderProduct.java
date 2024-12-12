@@ -1,10 +1,7 @@
 package ec.edu.uce.laverdejhon_paymentjakarta.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -18,22 +15,32 @@ import java.util.Date;
 public class OrderProduct {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_product")
     private long id;
 
-    private long amount;
+    @Id
+    @Column(name = "id_product")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long productId;
+
+    private String amount;
     private Date date;
 
     public OrderProduct() {
 
     }
 
-    @OneToOne
-    private Customer customer;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer one_customer;
 
     @ManyToOne
-    private Product product;
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product products;
 
     @ManyToOne
-    private OrderPayment orderPayment;
+    @JoinColumn(name = "order_id", nullable = false)
+    private OrderP order_product;
 
 }
