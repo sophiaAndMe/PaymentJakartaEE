@@ -32,6 +32,8 @@
             <property name="jakarta.persistence.schema-generation.database.action" value="create"/>
 
             <property name="hibernate.hbm2ddl.auto" value="update" />
+            
+            <property name="hibernate.hbm2ddl.auto=none" value=""/>
 
         </properties>
     </persistence-unit>

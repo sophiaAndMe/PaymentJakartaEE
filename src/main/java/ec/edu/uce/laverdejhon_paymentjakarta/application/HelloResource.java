@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Path("/test")
 public class HelloResource {
@@ -51,9 +52,30 @@ public class HelloResource {
     //--> problema con el order
     public String creteOrder(){
 
-        os.create(new Order(new Customer("name",
-                "aa", "cardpayment", "tu prima", 5546), 5.5));
-        return "Se ha elimiando el customer";
+        Customer customer = new Customer();
+        customer.setName("jhon");
+        customer.setAddress("Pichincha");
+        customer.setPayment("cardpayment");
+
+        Product product = new Product();
+        product.setName(customer.getName());
+        product.setPrice(533.22);
+
+        Order order = new Order();
+        order.setCustomer(customer);
+        order.setDate(LocalDateTime.now());
+        order.setTotalAmount(220.00);
+
+        //os.create(order);
+
+        OrderProduct op = new OrderProduct();
+        op.setOrder(order);
+        op.setProduct(product);
+        op.setQuantity(2);
+        op.setSubtotal(2);
+        ops.create(op);
+
+        return "Hello World!!";
     }
 
     @Path("/name={name}/address={address}")
@@ -80,30 +102,30 @@ public class HelloResource {
                                       @PathParam("product") String product,
                                       @PathParam("price") double price){
 
-        Product product1 = new Product();
-        product1.setName(product);
-        product1.setPrice(price);
-        ps.create(product1);
-
         Customer customer = new Customer();
         customer.setName(name);
         customer.setAddress(address);
         customer.setPayment(payment);
-        cs.create(customer);
+        //cs.create(customer);
+
+        Product product1 = new Product();
+        product1.setName(product);
+        product1.setPrice(price);
+        //ps.create(product1);
 
         Order order1 = new Order();
         order1.setCustomer(customer);
-        order1.setDate(order1.getDate());
+        order1.setDate(LocalDateTime.now());
         order1.setTotalAmount(price);
         os.create(order1);
 
 
-        OrderProduct op = new OrderProduct();
-        op.setOrder(order1);
-        op.setProduct(product1);
-        op.setQuantity(2);
-        op.setSubtotal(2* price);
-        ops.create(op);
+//        OrderProduct op = new OrderProduct();
+//        op.setOrder(order1);
+//        op.setProduct(product1);
+//        op.setQuantity(2);
+//        op.setSubtotal(2* price);
+//        ops.create(op);
 
         return  cs.getToStringByCustomer()+ ps.getToStringByOrder();
     }

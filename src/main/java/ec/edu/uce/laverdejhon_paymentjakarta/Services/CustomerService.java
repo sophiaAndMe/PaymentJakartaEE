@@ -7,6 +7,7 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import jakarta.transaction.Transactional;
 
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class CustomerService {
 
     // CRUD
 
+    @Transactional
     public void create(Customer customer) {
         this.customer = customer;
         em.persist(customer);

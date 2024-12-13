@@ -6,6 +6,7 @@ import jakarta.ejb.Stateful;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 
 @ApplicationScoped
 public class ProductService {
@@ -26,7 +27,7 @@ public class ProductService {
 //
 //    }
 
-    //--> CRUD, Create
+    @Transactional
     public void create(Product product) {
         this.product = product;
         em.persist(product);

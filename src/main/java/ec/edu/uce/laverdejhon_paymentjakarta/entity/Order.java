@@ -8,7 +8,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @ToString
@@ -21,19 +23,22 @@ public class Order {
     @Column(name = "id_order")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     private LocalDateTime date = LocalDateTime.now();
 
-    public Order() {}
-
-
-    @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "customer_id",foreignKey = @ForeignKey(name = "FK_Order_Customer"),
+                nullable = false)
     private Customer customer;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST)
+    private List<OrderProduct> orderProducts;
 
     @Column(nullable = false)
     private Double totalAmount;
 
-    public Order(Customer customer, double v) {
+    public Order() {
+        this.orderProducts = new ArrayList<>();
     }
 
 

@@ -11,7 +11,7 @@ import lombok.ToString;
 @Setter
 @Getter
 @Entity
-@Table(schema = "paymentdb")
+@Table(name = "OrderProduct",schema = "paymentdb")
 public class OrderProduct {
 
     @Id
@@ -19,13 +19,16 @@ public class OrderProduct {
     private long idOrderProduct;
 
     @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
+    @JoinColumn(name = "product_id", foreignKey = @ForeignKey(name = "FK_OrderProduct_product"),
+            nullable = false)
     private Product product;
 
     @ManyToOne
-    @JoinColumn(name = "order_id",nullable = false)
+    @JoinColumn(name = "order_id",foreignKey = @ForeignKey(name = "FK_OrderProduct_order"),
+            nullable = false)
     private Order order;
 
+    //--> voy a ponerlo true
     @Column(nullable = false)
     private int quantity;
 
