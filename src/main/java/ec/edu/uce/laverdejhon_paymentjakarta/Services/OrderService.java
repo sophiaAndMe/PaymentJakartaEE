@@ -1,34 +1,30 @@
 package ec.edu.uce.laverdejhon_paymentjakarta.Services;
 
-import ec.edu.uce.laverdejhon_paymentjakarta.entity.OrderP;
+import ec.edu.uce.laverdejhon_paymentjakarta.entity.Order;
+import jakarta.ejb.Stateless;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.transaction.Transactional;
 
-public class OrderPaymentService {
+@ApplicationScoped
+public class OrderService {
 
     EntityManagerFactory emp = Persistence.createEntityManagerFactory("EntityP");
     EntityManager em = emp.createEntityManager();
 
     @Inject
-    OrderP orderP;
+    Order order;
 
-    public OrderPaymentService() {}
+    public OrderService() {}
 
 
-    //--> Connection to db trought nameUnity from persistence.xml
-    public OrderPaymentService(EntityManager em) {
-        this.em = em;
-
-    }
-
-    //--> CRUD, Create
     @Transactional
-    public void create(OrderP orderP) {
-        this.orderP = orderP;
-        em.persist(orderP);
+    public void create(Order order) {
+        this.order = order;
+        em.persist(order);
     }
 
     //--> Delete
@@ -37,9 +33,5 @@ public class OrderPaymentService {
 //        em.remove(em.find(Customer.class, id));
 //    }
 
-    @Override
-    public String toString() {
-        return "{INFORMACION DE PAGO: "
-                + orderP.getId()+'}';
-    }
+
 }

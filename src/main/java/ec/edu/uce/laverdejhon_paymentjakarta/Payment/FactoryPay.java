@@ -4,7 +4,7 @@ import java.util.Locale;
 
 public class FactoryPay {
 
-    public static String FactoryP(String pay, String to, String amount){
+    public static String FactoryP(String pay, String to, double price){
 
         if(pay==null){
             return null;
@@ -12,10 +12,10 @@ public class FactoryPay {
             switch (pay.toLowerCase()){
                 case "cardpayment":
 
-                    return new CardPayment().pay( pay,to, amount);
+                    return new CardPayment().pay( pay,to, price);
                 case "paypalpayment":
 
-                    return new PayPalPayment().pay(pay, to, amount);
+                    return new PayPalPayment().pay(pay, to, price);
                     default:
                         throw new IllegalArgumentException("Unsupported payment type" + pay);
             }

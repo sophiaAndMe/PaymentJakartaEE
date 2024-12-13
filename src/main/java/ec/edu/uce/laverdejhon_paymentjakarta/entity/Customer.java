@@ -9,8 +9,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@ApplicationScoped
-@Table(name = "`CUSTOMER`", schema = "paymentdb")
+@Table(schema = "paymentdb")
 public class Customer {
 
     @Id
@@ -25,21 +24,14 @@ public class Customer {
     private String payment;
 
     public Customer( String name, String address,
-                    String payment, String to, String amount) {
+                    String payment, String to, double price) {
         this.name = name;
         this.address = address;
-        this.payment = FactoryPay.FactoryP(payment,to,amount);
+        this.payment = FactoryPay.FactoryP(payment,to,price);
     }
 
     public Customer() {
-
     }
-
-    @OneToMany(mappedBy = "customer_order")
-    private  List<OrderP> orderPCustomer;
-
-    @OneToOne(mappedBy = "one_customer")
-    private OrderProduct orderProduct;
 
     @Override
     public String toString() {
@@ -48,7 +40,6 @@ public class Customer {
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", payment='" + payment + '\'' +
-                ", orderPayments=" + +
                 '}';
     }
 }

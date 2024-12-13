@@ -1,46 +1,42 @@
 package ec.edu.uce.laverdejhon_paymentjakarta.entity;
 
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.Date;
-
 @ToString
 @Setter
 @Getter
 @Entity
+@Table(schema = "paymentdb")
 public class OrderProduct {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_product")
-    private long id;
+    private long idOrderProduct;
 
-    @Id
-    @Column(name = "id_product")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long productId;
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
 
-    private String amount;
-    private Date date;
+    @ManyToOne
+    @JoinColumn(name = "order_id",nullable = false)
+    private Order order;
+
+    @Column(nullable = false)
+    private int quantity;
+
+    @Column(nullable = false)
+    private double subtotal;
+
 
     public OrderProduct() {
 
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "customer_id", nullable = false)
-    private Customer one_customer;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
-    private Product products;
-
-    @ManyToOne
-    @JoinColumn(name = "order_id", nullable = false)
-    private OrderP order_product;
 
 }

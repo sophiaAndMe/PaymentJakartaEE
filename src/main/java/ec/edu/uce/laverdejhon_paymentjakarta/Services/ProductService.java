@@ -3,12 +3,11 @@ package ec.edu.uce.laverdejhon_paymentjakarta.Services;
 import ec.edu.uce.laverdejhon_paymentjakarta.entity.Customer;
 import ec.edu.uce.laverdejhon_paymentjakarta.entity.Product;
 import jakarta.ejb.Stateful;
-import jakarta.ejb.Stateless;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.*;
-import jakarta.transaction.Transactional;
 
-@Stateful
+@ApplicationScoped
 public class ProductService {
 
 
@@ -37,12 +36,6 @@ public class ProductService {
 
     public void delete(long id){
         em.remove(em.find(Customer.class, id));
-    }
-
-    @Override
-    public String toString() {
-        return "{INFORMACION DE PAGO: "
-                + product.getId()+'}';
     }
 
     public String getToStringByOrder(){

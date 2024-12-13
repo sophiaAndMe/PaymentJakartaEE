@@ -2,6 +2,7 @@ package ec.edu.uce.laverdejhon_paymentjakarta.Services;
 
 import ec.edu.uce.laverdejhon_paymentjakarta.entity.Customer;
 import jakarta.ejb.Stateless;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -10,7 +11,7 @@ import jakarta.persistence.Persistence;
 import java.util.List;
 
 
-@Stateless
+@ApplicationScoped
 public class CustomerService {
 
     EntityManagerFactory emp = Persistence.createEntityManagerFactory("EntityP");

@@ -10,32 +10,28 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
-@ApplicationScoped
+@Table(schema = "paymentdb")
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_product")
-    private long id;
+    private long idProduct;
+
     @Column
     private String name;
     @Column
-    private String amount;
+    private double price;
 
 
     public Product() {}
 
-    public Product( String name, String amount) {
-
-        this.name = name;
-        this.amount = amount;
+    @Override
+    public String toString() {
+        return "Product{" +
+                "idProduct=" + idProduct +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                '}';
     }
-
-
-    @ManyToMany(mappedBy = "products")
-    private List<OrderP> orderProducts;
-
-    @ManyToMany
-    private List<Product> orderPayment;
-
 }
