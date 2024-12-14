@@ -26,17 +26,10 @@ public class ProductService {
 //        this.em = em;
 //
 //    }
-
-    @Transactional
-    public void create(Product product) {
-        this.product = product;
-        em.persist(product);
-    }
-
     //--> Delete
 
     public void delete(long id){
-        em.remove(em.find(Customer.class, id));
+        em.remove(em.find(Product.class, id));
     }
 
     public String getToStringByOrder(){

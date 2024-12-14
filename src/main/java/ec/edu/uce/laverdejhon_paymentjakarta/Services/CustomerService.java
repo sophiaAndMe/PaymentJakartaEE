@@ -10,6 +10,7 @@ import jakarta.persistence.Persistence;
 import jakarta.transaction.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @ApplicationScoped
@@ -23,13 +24,6 @@ public class CustomerService {
 
     public CustomerService() {}
 
-    // CRUD
-
-    @Transactional
-    public void create(Customer customer) {
-        this.customer = customer;
-        em.persist(customer);
-    }
 
     public void delete(long id){
         em.remove(em.find(Customer.class, id));
@@ -37,10 +31,19 @@ public class CustomerService {
 
 
 
+
     public List<Customer> getAllCustomer(){
         String query = "SELECT c FROM Customer c";
         return em.createQuery(query, Customer.class).getResultList();
     }
+
+    public String getFormattedCustomers() {
+        List<Customer> customers = getAllCustomer();
+        return customers.stream()
+                .map(Customer::toString)  /// Llama al metodo toString de cada objeto
+                .collect(Collectors.joining("\n")); // Une cada cliente con un salto de línea
+    }
+
 
     public String getToStringByCustomer(){
         return this.customer.toString();

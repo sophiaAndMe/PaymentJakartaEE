@@ -25,15 +25,17 @@
             <property name="hibernate.use_sql_comments" value="true"/>
 
             <property name="hibernate.default_schema" value="paymentdb" />
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 
 
-            <property name="hibernate.connection.pool_size" value="1"/>
-            <property name="jakarta.persistence.schema-generation.database.action" value="create"/>
+            <property name="hibernate.connection.pool_size" value="1" />
+
+            <!--Asegura que hibernate solo actualize el esquema -->
+            <property name="jakarta.persistence.schema-generation.database.action" value="update" />
 
             <property name="hibernate.hbm2ddl.auto" value="update" />
             
-            <property name="hibernate.hbm2ddl.auto=none" value=""/>
+            <property name="hibernate.hbm2ddl.auto=none" value="" />
 
         </properties>
     </persistence-unit>

@@ -31,7 +31,7 @@ public class Order {
                 nullable = false)
     private Customer customer;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.REMOVE)
     private List<OrderProduct> orderProducts;
 
     @Column(nullable = false)

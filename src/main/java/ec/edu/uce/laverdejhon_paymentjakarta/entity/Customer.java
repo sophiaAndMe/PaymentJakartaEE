@@ -4,6 +4,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -32,6 +33,10 @@ public class Customer {
 
     public Customer() {
     }
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Order> orders = new ArrayList<>();
+
 
     @Override
     public String toString() {

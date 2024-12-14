@@ -1,5 +1,7 @@
 package ec.edu.uce.laverdejhon_paymentjakarta.Services;
 
+import ec.edu.uce.laverdejhon_paymentjakarta.entity.Customer;
+import ec.edu.uce.laverdejhon_paymentjakarta.entity.Order;
 import ec.edu.uce.laverdejhon_paymentjakarta.entity.OrderProduct;
 import jakarta.ejb.Stateless;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -29,10 +31,10 @@ public class OrderProductService {
     }
 
     //--> Delete
-//
-//    public void delete(long id){
-//        em.remove(em.find(Customer.class, id));
-//    }
+
+    public void delete(long id){
+        em.remove(em.find(Order.class, id));
+    }
 
 
 
