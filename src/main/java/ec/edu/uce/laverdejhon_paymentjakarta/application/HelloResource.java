@@ -4,40 +4,59 @@ package ec.edu.uce.laverdejhon_paymentjakarta.application;
 import ec.edu.uce.laverdejhon_paymentjakarta.Services.CustomerService;
 import ec.edu.uce.laverdejhon_paymentjakarta.Services.OrderProductService;
 import ec.edu.uce.laverdejhon_paymentjakarta.Services.OrderService;
-import ec.edu.uce.laverdejhon_paymentjakarta.Services.ProductService;
 import ec.edu.uce.laverdejhon_paymentjakarta.entity.*;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Response;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
-@Path("/test")
+@Path("/manager")
 public class HelloResource {
 
     @Inject
     private CustomerService cs;
     @Inject
     private OrderService os;
-    @Inject
-    private ProductService ps;
+
     @Inject
     private OrderProductService ops;
 
-    @Path("/all")
+    //
+    @Path("/allCustomer")
     @GET
     @Produces("text/plain")
     public String allCustomer(){
-        CustomerService cs = new CustomerService();
         return cs.getFormattedCustomers();
     }
 
-    //--> Delete customer
+    //--> update
+    //
     @GET
-    @Path("/{id}")
+    @Path("/updateCustomer/{id}&{name}&{address}")
+    @Produces("text/plain")
+    public Response updateCustomer(@PathParam("id") Long id,
+                                   @PathParam("name") String name,
+                                   @PathParam("address") String address) {
+        try {
+            cs.updateCustomer(id, name, address);
+            return Response.ok("Se ha actualizado la informacion del cliente").build();
+        } catch (RuntimeException e) {
+            return Response.status(Response.Status.NOT_FOUND).entity("Customer no encontrado").build();
+        }
+    }
+    @GET
+    @Path("/listName/{name}")
+    @Produces("text/plain")
+    @Transactional
+    public String findCustomer(@PathParam("name")String name){
+        return "Se han encontrado estos clientes... " + "\n" + os.getByName(name);
+    }
+    //--> Delete customer
+    //
+    @GET
+    @Path("/delete/{id}")
     @Produces("text/plain")
     @Transactional
     public String deleteCustomer(@PathParam("id")long id){
@@ -45,8 +64,18 @@ public class HelloResource {
         return "Se ha elimiando el customer" + id;
     }
 
+    //--> Information Completed
+    //
+    @GET
+    @Path("/allInformation/{name}")
+    @Produces("text/plain")
+    @Transactional
+    public String getAllInformation(@PathParam("name") String name){
+        return os.finalInformation(name);
+    }
 
-    @Path("/{name}&{address}&{payment}&{product}&{price}")
+    //
+    @Path("/create/{name}&{address}&{payment}&{product}&{price}")
     @GET
     @Produces("text/plain")
     @Transactional

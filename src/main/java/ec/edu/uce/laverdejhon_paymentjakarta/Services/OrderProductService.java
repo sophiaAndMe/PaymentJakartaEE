@@ -22,7 +22,6 @@ public class OrderProductService {
 
     public OrderProductService() {}
 
-
     //--> CRUD, Create
     @Transactional
     public void create(OrderProduct orderProduct) {
@@ -30,11 +29,7 @@ public class OrderProductService {
         em.persist(orderProduct);
     }
 
-    //--> Delete
 
-    public void delete(long id){
-        em.remove(em.find(Order.class, id));
-    }
 
 
 

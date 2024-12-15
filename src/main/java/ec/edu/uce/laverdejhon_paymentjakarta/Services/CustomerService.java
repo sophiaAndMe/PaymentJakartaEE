@@ -24,14 +24,6 @@ public class CustomerService {
 
     public CustomerService() {}
 
-
-    public void delete(long id){
-        em.remove(em.find(Customer.class, id));
-    }
-
-
-
-
     public List<Customer> getAllCustomer(){
         String query = "SELECT c FROM Customer c";
         return em.createQuery(query, Customer.class).getResultList();
@@ -45,9 +37,19 @@ public class CustomerService {
     }
 
 
-    public String getToStringByCustomer(){
-        return this.customer.toString();
-    }
+    @Transactional
+    public void updateCustomer(Long customerID,String newName, String newAddress ){
+        Customer customer1 = em.find(Customer.class, customerID);
+
+        if(customer1 != null){
+            customer1.setName(newName);
+            customer1.setAddress(newAddress);
+            em.merge(customer1);
+        }else{
+            throw  new RuntimeException("No se ha encontrado un cliente.. con id: "+ customerID);
+        }
+
+           }
 
 
 }
