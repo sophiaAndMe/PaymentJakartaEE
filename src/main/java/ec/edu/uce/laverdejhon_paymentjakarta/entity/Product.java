@@ -5,12 +5,11 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
 
 @Setter
 @Getter
 @Entity
-@Table(schema = "paymentdb")
+@Table(schema = "paymentdb") // especificamos el schema
 public class Product {
 
     @Id
@@ -26,12 +25,5 @@ public class Product {
 
     public Product() {}
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "idProduct=" + idProduct +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                '}';
-    }
+
 }

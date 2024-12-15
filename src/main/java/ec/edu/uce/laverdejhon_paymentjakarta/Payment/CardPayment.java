@@ -11,7 +11,6 @@ public class CardPayment implements IPayment{
         return String.format("""
                 TypePayment: %s
                 to: %s
-                BP: %s
                 """,typePayment,to,price);
 
     }

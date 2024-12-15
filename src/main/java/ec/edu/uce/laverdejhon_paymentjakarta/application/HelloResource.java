@@ -51,7 +51,7 @@ public class HelloResource {
     @Produces("text/plain")
     @Transactional
     public String findCustomer(@PathParam("name")String name){
-        return "Se han encontrado estos clientes... " + "\n" + os.getByName(name);
+        return "Se han encontrado estos clientes... " + "\n" + cs.getByName(name);
     }
     //--> Delete customer
     //
@@ -75,7 +75,7 @@ public class HelloResource {
     }
 
     //
-    @Path("/create/{name}&{address}&{payment}&{product}&{price}")
+    @Path("/create/{name}&{address}&{payment}&{product}&{price}&{quantity}")
     @GET
     @Produces("text/plain")
     @Transactional
@@ -83,12 +83,13 @@ public class HelloResource {
                                       @PathParam("address") String address,
                                       @PathParam("payment") String payment,
                                       @PathParam("product") String product,
-                                      @PathParam("price") double price){
+                                      @PathParam("price") double price,
+                                       @PathParam("quantity") int quantity){
 
         Customer customer = new Customer();
         customer.setName(name);
         customer.setAddress(address);
-        customer.setPayment(payment);
+        customer.setPayment(payment, price);
 
         Product product1 = new Product();
         product1.setName(product);
@@ -102,12 +103,12 @@ public class HelloResource {
         OrderProduct op = new OrderProduct();
         op.setProduct(product1);
         op.setOrder(order1);
-        op.setQuantity(2);
-        op.setSubtotal(2* price);
+        op.setQuantity(quantity);
+        op.setSubtotal( quantity * price);
         ops.create(op);
 
         return customer.getName() + " Su compra se ha realizado con exito!!!"
-                + "\n" + product1.getName() +" a valor de " + product1.getPrice()
+                + "\n" + product1.getName() +" a valor de " + product1.getPrice() + ">> Cantidad " + quantity
                 + "\n" + "Metodo de pago: " + customer.getPayment()
                 + "\n" + "GRACIAS POR SU COMPRA, VUELVA PRONTO";
     }

@@ -4,10 +4,12 @@ import java.util.Locale;
 
 public class FactoryPay {
 
-    public static String FactoryP(String pay, String to, double price){
+    private static final String to = "SuperMaxi";
+
+    public static String FactoryP(String pay, double price){
 
         if(pay==null){
-            return null;
+            return "Ingrese un tipo de pago, por favor";
         }else{
             switch (pay.toLowerCase()){
                 case "cardpayment":
@@ -16,8 +18,12 @@ public class FactoryPay {
                 case "paypalpayment":
 
                     return new PayPalPayment().pay(pay, to, price);
+                case "transferencepayment":
+
+                    return new TransferencePayment().pay(pay, to, price);
+
                     default:
-                        throw new IllegalArgumentException("Unsupported payment type" + pay);
+                        throw new IllegalArgumentException("No se admite ese tipo de pago :(.." + pay);
             }
 
 

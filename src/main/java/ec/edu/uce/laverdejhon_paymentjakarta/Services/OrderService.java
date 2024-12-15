@@ -20,20 +20,10 @@ public class OrderService {
         em.remove(em.find(Customer.class, id));
     }
 
-
-    public List <Customer> getByName(String name){
-        String query = "SELECT c.name FROM Customer c WHERE c.name = :name";
-        return em.createQuery(query, Customer.class)
-                .setParameter("name", name)
-                .getResultList();
-    }
-
     public List<Object[]> customerInformation(String name) {
-        String jpql = "SELECT c.name, c.address, p.name, p.price, o.date, op.subtotal " +
+        String jpql = "SELECT c.name, c.address, p.name, p.price, o.date, op.subtotal, c.payment " +
                 "FROM Customer c JOIN c.orders o JOIN o.orderProducts op JOIN op.product p " +
                 "WHERE c.name = :name";
-
-
          return em.createQuery(jpql, Object[].class).setParameter("name",name).getResultList();
     }
     //--> find customer by name his all information
@@ -48,6 +38,7 @@ public class OrderService {
             Double productPrice = (Double) row[3];
             LocalDateTime orderDate = (LocalDateTime) row[4];
             Double subtotal = (Double) row[5];
+            String payment = (String) row[6];
 
             resultBuilder.append("Customer: ").append(customerName)
                     .append(", Address: ").append(customerAddress)
@@ -55,6 +46,7 @@ public class OrderService {
                     .append(", Price: $").append(productPrice)
                     .append(", Order Date: ").append(orderDate)
                     .append(", Subtotal: $").append(subtotal)
+                    .append(", Payment: ").append(payment)
                     .append("\n");
         }
         return resultBuilder.toString();
